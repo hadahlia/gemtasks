@@ -6,6 +6,8 @@ create a config.json in the app directory as such
 
 ```json
 {
-	"token": "token"
+	"token": "token-goes-here",
+	"clientId": "appid-goes-here",
+	"guildId": "guild-id-for-registering-commands"
 }
 ```
