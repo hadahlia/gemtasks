@@ -1,0 +1,19 @@
+{
+  "name": "gembot",
+  "version": "1.0.0",
+  "description": "discord bot for my girlfriend's server :>",
+  "license": "MIT",
+  "author": "hadahlia",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "discord.js": "^14.27.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0"
+  }
+}
