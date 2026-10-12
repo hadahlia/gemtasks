@@ -1,13 +1,10 @@
 const fs = require('node:fs');
 const path = require ('node:path');
-const { Client, Events, GatewayIntentBits, Collection, MessageFlags } = require('discord.js');
+const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.once(Events.ClientReady, (readyClient) => {
-	console.log(`準備完了！ ${readyClient.user.tag}がオンライン`);
-});
 
 client.commands = new Collection();
 
@@ -28,33 +25,17 @@ for (const folder of commandFolders) {
 	}
 }
 
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith('.js'));
 
-client.on(Events.InteractionCreate, async (interaction) => {
-	if (!interaction.isChatInputCommand()) return;
-	//	console.log(interaction);
-	const command = interaction.client.commands.get(interaction.commandName);
-
-	if (!command) {
-		console.error(`${interaction.commandName}が見つかりません。`);
-		return;
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
 	}
-
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({
-				content: 'エラー',
-				flags: MessageFlags.Ephemeral,
-			});
-		} else {
-			await interaction.reply({
-				content: 'エラー',
-				flags: MessageFlags.Ephemeral,
-			});
-		}
-	}
-});
+}
 
 client.login(token);
