@@ -1,12 +1,15 @@
 const fs = require('node:fs');
 const path = require ('node:path');
+// const { Op } = require('sequelize');
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
+
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 
 client.commands = new Collection();
+
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
@@ -32,6 +35,8 @@ for (const file of eventFiles) {
 	const filePath = path.join(eventsPath, file);
 	const event = require(filePath);
 	if (event.once) {
+		// if (event.name === Events.ClientReady) {
+		// }
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
 		client.on(event.name, (...args) => event.execute(...args));
