@@ -1,5 +1,8 @@
 thing for my girlfriend's discord server
 
+# Build
+```npm i discord.js sequelize sqlite3```
+
 # Usage
 
 create a config.json in the app directory as such
@@ -15,3 +18,4 @@ create a config.json in the app directory as such
 ```
 
 must run `node dbInit.js` to initialize databases
+deploy commands with `node deploy-commands.js`
