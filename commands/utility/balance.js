@@ -21,7 +21,10 @@ function getBalance(id) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder().setName('balance').setDescription('displays ur taskiGems! <3'),
+	data: new SlashCommandBuilder()
+		.setName('balance')
+		.setDescription('displays ur taskiGems! <3')
+		.addStringOption((option) => option.setName('user').setDescription('member')),
 	async execute(interaction) {
 		const target = interaction.options.getUser('user') ?? interaction.user;
 		await interaction.reply(`${target.tag} has ${getBalance(target.id)} gems`);
