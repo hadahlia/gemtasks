@@ -1,9 +1,27 @@
 // add tasks to data list. admin required
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+// const { TaskList } = require('../../dbObjects');
+const { addTask } = require('../../inc/taskmanage.js');
+
 
 module.exports = {
-	data: new SlashCommandBuilder().setName('addtask').setDescription('lorem ipsum'),
+	data: new SlashCommandBuilder()
+		.setName('addtask')
+		.setDescription('adds a task to the task list')
+		.addStringOption((option) => option.setName('task').setDescription('task to add').setRequired(true))
+		.addIntegerOption((option) => option.setName('reward').setDescription('gems rewarded on task collection').setRequired(true))
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 	async execute(interaction) {
-		await interaction.reply('debug');
+		const task = interaction.options.getString('task');
+		const reward = interaction.options.getInteger('reward');
+		// const storedTasks = await TaskList.findAll();
+
+		if (task == null) return interaction.reply('task must be specified >:c');
+		if (reward < 1) return interaction.reply('ugh, cheaping out are we?');
+
+		addTask(task, reward);
+		// storedTasks.forEach((b) => tasks.set(b.task, b));
+		await interaction.reply(`added ${task} (for ${reward} gems) to the Task List`);
+		// console.log(`thing ${}`);
 	},
 };
