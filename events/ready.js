@@ -1,7 +1,7 @@
 const { Events, TextDisplayBuilder, MessageFlags } = require('discord.js');
-const { Users, TaskList } = require('../dbObjects.js');
+const { Users } = require('../dbObjects.js');
 const { homeId, roleId } = require('../config.json');
-const { tasks } = require('../inc/taskmanage.js');
+// const { tasks } = require('../inc/taskmanage.js');
 // const storedBalance = async () => {
 // 	await Users.findAll();
 // };
@@ -11,10 +11,10 @@ module.exports = {
 	once: true,
 	execute(client) {
 		(async () => {
-			const storedTasks = await TaskList.findAll();
+			// const storedTasks = await TaskList.findAll();
 			const storedBalance = await Users.findAll();
 			// console.log('i got here');
-			storedTasks.forEach((a) => tasks.set(a.task, a));
+			// storedTasks.forEach((a) => tasks.set(a.task, a));
 			storedBalance.forEach((b) => gems.set(b.user_id, b));
 		})();
 
