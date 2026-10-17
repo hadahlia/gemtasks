@@ -11,7 +11,7 @@ module.exports = {
 	async execute(interaction) {
 		const embeds = [];
 
-		let p1 = '';
+		let p1 = '# Task List\n';
 		const taskList = await TaskList.findAll();
 		// const taskString = taskList.map(t => t).join(', ') || 'No tasks in database :(';
 		for (const row of taskList) {

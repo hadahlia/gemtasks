@@ -1,4 +1,3 @@
-// add tasks to data list. admin required
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 // const { TaskList } = require('../../dbObjects');
 const { addTask } = require('../../inc/taskmanage.js');

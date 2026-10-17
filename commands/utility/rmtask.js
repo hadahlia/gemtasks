@@ -1,4 +1,3 @@
-// remove tasks from persistent list. admin required
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 // const { TaskList } = require('../../dbObjects');
 const { delTask } = require('../../inc/taskmanage.js');
