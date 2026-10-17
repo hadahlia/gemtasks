@@ -19,3 +19,6 @@ create a config.json in the app directory as such
 
 must run `node dbInit.js` to initialize databases
 deploy commands with `node deploy-commands.js`
+
+You will also want to replace the emoji IDs 
+(at the top of inc/gemconversion.js)
