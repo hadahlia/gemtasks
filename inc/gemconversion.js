@@ -41,42 +41,10 @@ function baseThreeGem(input) {
 				rtext += e;
 			}
 		}
-		// dbgtext += bit.toString();
 	}
 
 	return rtext;
 
-	// const bit6 = Math.floor(t / 243);
-	// if (bit6 > 0) {
-	// 	t -= bit6 * 243;
-	// }
-
-	// const bit5 = Math.floor(t / 81);
-	// if (bit5 > 0) {
-	// 	t -= bit5 * 81;
-	// }
-
-	// const bit4 = Math.floor(t / 27);
-	// if (bit4 > 0) {
-	// 	t -= bit4 * 27;
-	// }
-
-	// const bit3 = Math.floor(t / 9);
-	// if (bit3 > 0) {
-	// 	t -= bit3 * 9;
-	// }
-
-	// const bit2 = Math.floor(t / 3);
-	// if (bit2 > 0) {
-	// 	t -= bit2 * 3;
-	// }
-
-	// const bit1 = Math.floor(t / 1);
-	// if (bit1 > 0) {
-	// 	t -= bit1;
-	// }
-
-	// console.log(`t is ${t}\n val: ${dbgtext}`);
 }
 
 module.exports = {
