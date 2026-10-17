@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, Collection } = require('discord.js');
+const { baseThreeGem } = require('../../inc/gemconversion.js');
 const gems = new Collection();
 
 // async function addBalance(id, amt) {
@@ -23,10 +24,15 @@ function getBalance(id) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('balance')
-		.setDescription('displays ur taskiGems! <3')
+		.setDescription('displays ur TaskiGems! <3')
 		.addUserOption((option) => option.setName('user').setDescription('member target')),
 	async execute(interaction) {
 		const target = interaction.options.getUser('user') ?? interaction.user;
-		await interaction.reply(`${target.tag} has ${getBalance(target.id)} gems`);
+		const bal = getBalance(target.id);
+		if (bal > 0) {
+			await interaction.reply(`${target.tag} gems: ${baseThreeGem(bal)}`);
+		} else {
+			await interaction.reply(`${target.tag} has no gems :cry: :dash:`);
+		}
 	},
 };

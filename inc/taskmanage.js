@@ -2,6 +2,8 @@ const { Collection } = require('discord.js');
 const { TaskList } = require('../dbObjects');
 const tasks = new Collection();
 
+const activeTasks = [];
+
 async function addTask(stask, amt) {
 	const newTask = await TaskList.create({ task: stask, reward: amt });
 	tasks.set(stask, newTask);
@@ -24,6 +26,7 @@ async function delTask(t) {
 }
 
 module.exports = {
+	activeTasks,
 	tasks: tasks,
 	addTask,
 	delTask,

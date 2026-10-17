@@ -2,7 +2,8 @@ const { sequelize } = require('../inc/sequelize.js');
 const { Events, TextDisplayBuilder, MessageFlags } = require('discord.js');
 const { Users, TaskList } = require('../dbObjects.js');
 const { homeId, roleId } = require('../config.json');
-// const { tasks } = require('../inc/taskmanage.js');
+const { baseThreeGem } = require('../inc/gemconversion.js');
+const { activeTasks } = require('../inc/taskmanage.js');
 // const storedBalance = async () => {
 // 	await Users.findAll();
 // };
@@ -14,8 +15,11 @@ module.exports = {
 	once: true,
 	execute(client) {
 		let t1 = '';
+		let e1 = '';
 		let t2 = '';
+		let e2 = '';
 		let t3 = '';
+		let e3 = '';
 
 		(async () => {
 
@@ -28,12 +32,19 @@ module.exports = {
 
 			for (const row of storedTasks) {
 				if (i == 0) {
-					t1 += row.task + ` (${row.reward})`;
+					// basethree(row.reward);
+					t1 += row.task;
+					e1 = `${baseThreeGem(row.reward)}`;
 				} else if (i == 1) {
-					t2 += row.task + ` (${row.reward})`;
+					// basethree(row.reward);
+					t2 += row.task;
+					e2 = `${baseThreeGem(row.reward)}`;
 				} else if (i == 2) {
-					t3 += row.task + ` (${row.reward})`;
+					// basethree(row.reward);
+					t3 += row.task;
+					e3 = `${baseThreeGem(row.reward)}`;
 				}
+				activeTasks.push(row.reward);
 				i++;
 			}
 
@@ -55,12 +66,12 @@ module.exports = {
 				poll: {
 					question: { text: 'Flair Undesired' },
 					answers: [
-						{ text: '1: ' + t1, emoji: '🚨' },
-						{ text: '2: ' + t2, emoji: '🐹' },
-						{ text: '3: ' + t3, emoji: '⚰️' },
+						{ text: '1: ' + t1, emoji: e1 },
+						{ text: '2: ' + t2, emoji: e2 },
+						{ text: '3: ' + t3, emoji: e3 },
 					],
 					allowMultiselect: false,
-					duration: 72,
+					duration: 24,
 				},
 			});
 		})();

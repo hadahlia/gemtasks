@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { TaskList } = require('../../dbObjects');
 // const { tasks } = require('../../inc/taskmanage.js');
 const paginate = require('../../inc/pagination.js');
+const { baseThreeGem } = require('../../inc/gemconversion.js');
 
 
 module.exports = {
@@ -15,11 +16,11 @@ module.exports = {
 		const taskList = await TaskList.findAll();
 		// const taskString = taskList.map(t => t).join(', ') || 'No tasks in database :(';
 		for (const row of taskList) {
-			p1 += `**${row.task}**: ${row.reward} gems\n`;
+			p1 += `#${row.id} **${row.task}**: (${baseThreeGem(row.reward)}) \n`;
 		}
 
 		// const p1 = 'This is a test';
-		const p2 = 'Fuck You this is Also a Test';
+		const p2 = 'For Now This is a Test as Well';
 
 		for (let i = 0; i < 4; i++) {
 			if (i + 1 == 1) embeds.push(new EmbedBuilder().setColor('Blurple').setDescription(p1));
