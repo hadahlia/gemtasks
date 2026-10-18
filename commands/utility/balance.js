@@ -1,25 +1,7 @@
-const { SlashCommandBuilder, Collection } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { baseThreeGem } = require('../../inc/gemconversion.js');
-const gems = new Collection();
+const { getBalance } = require('../../inc/taskmanage.js');
 
-// async function addBalance(id, amt) {
-// 	const user = gems.get(id);
-
-// 	if (user) {
-// 		user.gems += Number(amt);
-// 		return user.save();
-// 	}
-
-// 	const newUser = await Users.create({ user_id: id, gems: amt });
-// 	gems.set(id, newUser);
-
-// 	return newUser;
-// }
-
-function getBalance(id) {
-	const user = gems.get(id);
-	return user ? user.gems : 0;
-}
 
 module.exports = {
 	data: new SlashCommandBuilder()

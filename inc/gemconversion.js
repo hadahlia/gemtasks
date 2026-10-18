@@ -48,7 +48,7 @@ function baseThreeGem(input) {
 }
 
 module.exports = {
-	gem1, gem3, gem9,
-	gem27, gem81, gem243,
+	gem1: gem1, gem3: gem3, gem9: gem9,
+	gem27: gem27, gem81: gem81, gem243: gem243,
 	baseThreeGem,
 };

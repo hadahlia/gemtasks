@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { activeTasks } = require('../../inc/taskmanage.js');
+const { Users } = require('../../dbObjects.js');
+const { activeTasks, addBalance } = require('../../inc/taskmanage.js');
 const { baseThreeGem } = require('../../inc/gemconversion.js');
 
 // the collect command can be used once per task bounty
@@ -17,12 +18,22 @@ module.exports = {
 			).setRequired(true)),
 	async execute(interaction) {
 
-		if (activeTasks.length === 0) {
+		if (activeTasks.length < 3) {
 			await interaction.reply('uh oh! active tasks has no members.');
+			return;
 		}
 		const target = interaction.user;
-		const choice = interaction.options.getInteger('id');
 
-		await interaction.reply(`${target.tag} get reward ${baseThreeGem(activeTasks[choice - 1])}`);
+		const user = await Users.findOne({ where: { user_id: target.id } });
+
+		if (user.collected == true) {
+			await interaction.reply(`Greedy greedy, ${target.tag}!\nYou've already collected today!`);
+		} else {
+			const choice = interaction.options.getInteger('id');
+			const reward = activeTasks[choice - 1];
+			addBalance(target.id, reward);
+			await interaction.reply(`${target.tag} gets reward ${baseThreeGem(reward)}`);
+		}
+
 	},
 };

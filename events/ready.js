@@ -3,7 +3,7 @@ const { Events, TextDisplayBuilder, MessageFlags } = require('discord.js');
 const { Users, TaskList } = require('../dbObjects.js');
 const { homeId, roleId } = require('../config.json');
 const { baseThreeGem } = require('../inc/gemconversion.js');
-const { activeTasks } = require('../inc/taskmanage.js');
+const { activeTasks, gems } = require('../inc/taskmanage.js');
 // const storedBalance = async () => {
 // 	await Users.findAll();
 // };
@@ -24,6 +24,14 @@ module.exports = {
 		(async () => {
 
 			const storedBalance = await Users.findAll();
+
+			for (const row of storedBalance) {
+				if (row.collected == true) {
+					row.collected = false;
+					row.save();
+				}
+			}
+
 			// console.log('i got here');
 			// storedTasks.forEach((a) => activeTasks.set(a.task, a));
 			const storedTasks = await TaskList.findAll({ order: sequelize.random(), limit: 3 });
