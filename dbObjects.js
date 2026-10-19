@@ -10,5 +10,6 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 
 const TaskList = require('./models/TaskList.js')(sequelize, Sequelize.DataTypes);
 const Users = require('./models/Users.js')(sequelize, Sequelize.DataTypes);
+const PostData = require('./models/PostData.js')(sequelize, Sequelize.DataTypes);
 
-module.exports = { Users, TaskList };
+module.exports = { Users: Users, TaskList: TaskList, PostData: PostData };

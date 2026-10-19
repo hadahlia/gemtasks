@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Users } = require('../../dbObjects.js');
-const { activeTasks, addBalance } = require('../../inc/taskmanage.js');
+const { Users, TaskList } = require('../../dbObjects.js');
+const { activeTasks, addBalance, getBalance } = require('../../inc/taskmanage.js');
 const { baseThreeGem } = require('../../inc/gemconversion.js');
 
 // the collect command can be used once per task bounty
@@ -24,16 +24,39 @@ module.exports = {
 		}
 		const target = interaction.user;
 
-		const user = await Users.findOne({ where: { user_id: target.id } });
+		// const safe = getBalance(target.id);
+		const user = await Users.findByPk(target.id);
 
-		if (user.collected == true) {
+		// if (user === null) {
+		// 	await interaction.reply('oh, user is null');
+		// 	return;
+		// }
+
+		if (user && user.collected == true) {
 			await interaction.reply(`Greedy greedy, ${target.tag}!\nYou've already collected today!`);
-		} else {
-			const choice = interaction.options.getInteger('id');
-			const reward = activeTasks[choice - 1];
-			addBalance(target.id, reward);
-			await interaction.reply(`${target.tag} gets reward ${baseThreeGem(reward)}`);
+			return;
 		}
 
+		const choice = interaction.options.getInteger('id');
+		const taskId = activeTasks[choice - 1];
+		if (!taskId) {
+			await interaction.reply('taskId is stale');
+			return;
+		}
+
+		const task = await TaskList.findByPk(taskId);
+		if (!task) {
+			await interaction.reply('task Out Of Bounds');
+			return;
+		}
+
+		const reward = Number(task.reward);
+		if (!Number.isFinite(reward) || reward <= 0) {
+			await interaction.reply('bad reward');
+			return;
+		}
+
+		await addBalance(target.id, reward);
+		await interaction.reply(`${target.tag} has redeemed ${task.task}\t++${baseThreeGem(reward)}`);
 	},
 };

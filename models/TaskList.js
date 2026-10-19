@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
 	return sequelize.define(
 		'task_list',
 		{
-			id: {
+			task_id: {
 				type: DataTypes.INTEGER,
 				autoIncrement: true,
 				primaryKey: true,

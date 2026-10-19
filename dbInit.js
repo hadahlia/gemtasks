@@ -3,6 +3,7 @@ const { sequelize } = require('./inc/sequelize.js');
 
 const TaskList = require('./models/TaskList.js')(sequelize, Sequelize.DataTypes);
 require('./models/Users.js')(sequelize, Sequelize.DataTypes);
+require('./models/PostData.js')(sequelize, Sequelize.DataTypes);
 
 const force = process.argv.includes('--force') || process.argv.includes('-f');
 

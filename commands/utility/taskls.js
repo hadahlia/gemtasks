@@ -16,7 +16,7 @@ module.exports = {
 		const taskList = await TaskList.findAll();
 		// const taskString = taskList.map(t => t).join(', ') || 'No tasks in database :(';
 		for (const row of taskList) {
-			p1 += `#${row.id} **${row.task}**: (${baseThreeGem(row.reward)}) \n`;
+			p1 += `${row.task_id} **${row.task}**: (${baseThreeGem(row.reward)}) \n`;
 		}
 
 		// const p1 = 'This is a test';

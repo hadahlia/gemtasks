@@ -1,9 +1,15 @@
 const { Collection } = require('discord.js');
-const { Users, TaskList } = require('../dbObjects');
+const { Users, TaskList, PostData } = require('../dbObjects');
 const tasks = new Collection();
 const gems = new Collection();
 
 const activeTasks = [];
+
+async function addPostData(t1, t2, t3) {
+	const newPData = await PostData.create({ tid1: t1, tid2: t2, tid3: t3, active: true });
+
+	return newPData;
+}
 
 async function addTask(stask, amt) {
 	const newTask = await TaskList.create({ task: stask, reward: amt });
@@ -35,7 +41,7 @@ async function addBalance(id, amt) {
 		return user.save();
 	}
 
-	const newUser = await Users.create({ user_id: id, gems: amt });
+	const newUser = await Users.create({ user_id: id, gems: amt, collected: true });
 	gems.set(id, newUser);
 
 	return newUser;
@@ -50,6 +56,7 @@ module.exports = {
 	activeTasks: activeTasks,
 	gems: gems,
 	tasks: tasks,
+	addPostData,
 	addTask,
 	delTask,
 	addBalance,
