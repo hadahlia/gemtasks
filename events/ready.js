@@ -87,7 +87,7 @@ async function taskPost(client, storedBalance) {
 	// const pid = await PostData.max('id') ?? 0;
 
 	const atext = new TextDisplayBuilder().setContent(
-		`<@&${roleId}>`,
+		`<@&${roleId}>\n(You can use \`/collect\` to turn in a task!)`,
 	);
 
 	client.channels.cache.get(homeId).send({
