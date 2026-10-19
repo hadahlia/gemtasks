@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 // const { TaskList } = require('../../dbObjects');
+const { baseThreeGem } = require('../../inc/gemconversion.js');
 const { addTask } = require('../../inc/taskmanage.js');
 
 
@@ -20,7 +21,7 @@ module.exports = {
 
 		addTask(task, reward);
 		// storedTasks.forEach((b) => tasks.set(b.task, b));
-		await interaction.reply(`added ${task} (for ${reward} gems) to the Task List`);
+		await interaction.reply(`added ${task} (${baseThreeGem(reward)}) to the Task List`);
 		// console.log(`thing ${}`);
 	},
 };
