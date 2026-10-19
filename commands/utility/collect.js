@@ -3,8 +3,6 @@ const { Users, TaskList } = require('../../dbObjects.js');
 const { activeTasks, addBalance, getBalance } = require('../../inc/taskmanage.js');
 const { baseThreeGem } = require('../../inc/gemconversion.js');
 
-// the collect command can be used once per task bounty
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('collect')
@@ -24,13 +22,8 @@ module.exports = {
 		}
 		const target = interaction.user;
 
-		// const safe = getBalance(target.id);
 		const user = await Users.findByPk(target.id);
 
-		// if (user === null) {
-		// 	await interaction.reply('oh, user is null');
-		// 	return;
-		// }
 
 		if (user && user.collected == true) {
 			await interaction.reply(`Greedy greedy, ${target.tag}!\nYou've already collected today!`);

@@ -14,14 +14,12 @@ module.exports = {
 	async execute(interaction) {
 		const task = interaction.options.getString('task');
 		const reward = interaction.options.getInteger('reward');
-		// const storedTasks = await TaskList.findAll();
 
 		if (task == null) return interaction.reply('task must be specified >:c');
 		if (reward < 1) return interaction.reply('ugh, cheaping out are we?');
 
 		addTask(task, reward);
-		// storedTasks.forEach((b) => tasks.set(b.task, b));
+
 		await interaction.reply(`added ${task} (${baseThreeGem(reward)}) to the Task List`);
-		// console.log(`thing ${}`);
 	},
 };

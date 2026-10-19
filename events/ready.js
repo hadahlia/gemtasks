@@ -5,40 +5,24 @@ const { homeId, roleId } = require('../config.json');
 const { baseThreeGem } = require('../inc/gemconversion.js');
 const { activeTasks, gems, addPostData } = require('../inc/taskmanage.js');
 const schedule = require('node-schedule');
-// const storedBalance = async () => {
-// 	await Users.findAll();
-// };
 
-// const activeTasks = new Collection();
 async function checkPostData() {
 	const postData = await PostData.findOne({ where: { active: true } });
 	if (postData) {
 		console.log('postData is not null!!');
 
-		// CHECK THE DATE
+
 		const d = Date.now() - postData.createdAt;
-		// return;
+
 		const h = Math.floor(d / (1000 * 60 * 60));
 
 		console.log(`time passed: ${d} OR ${h}`);
 		// IF ITS BEEN OVER 24 HOURS, ACTIVE IS FALSE MAKE NEW
 		if (h < 24) {
-			// if (activeTasks.length == 0 || activeTasks[0] != postData.tid1) {
-			// activeTasks.length = 0;
 			activeTasks.push(postData.tid1);
 			activeTasks.push(postData.tid2);
 			activeTasks.push(postData.tid3);
-			// if (activeTasks.length == 0) {
-			// 	activeTasks.push(postData.tid1);
-			// 	activeTasks.push(postData.tid2);
-			// 	activeTasks.push(postData.tid3);
-			// } else if (activeTasks.length == 3) {
-			// 	activeTasks[0] = postData.tid1;
-			// 	activeTasks[1] = postData.tid2;
-			// 	activeTasks[2] = postData.tid3;
-			// }
-			// }
-			// console.log(`what is activeTasks length... ${activeTasks.length}`);
+
 			return true;
 		} else {
 			postData.active = false;
@@ -60,7 +44,6 @@ async function taskPost(client, storedBalance) {
 	let t3 = '';
 	let e3 = '';
 
-	// (async () => {
 
 	// CHECK POSTDATA
 	for (let g = 0; g < activeTasks.length; g++) {
@@ -74,32 +57,28 @@ async function taskPost(client, storedBalance) {
 			row.save();
 		}
 	}
-	// console.log('i got here');
 	// storedTasks.forEach((a) => activeTasks.set(a.task, a));
 	const storedTasks = await TaskList.findAll({ order: sequelize.random(), limit: 3 });
 
 	let i = 0;
-	// activeTasks.length = 0;
 
 	for (const row of storedTasks) {
 		if (i == 0) {
-			// basethree(row.reward);
+
 			t1 += row.task;
 			e1 = `${baseThreeGem(row.reward)}`;
 		} else if (i == 1) {
-			// basethree(row.reward);
+
 			t2 += row.task;
 			e2 = `${baseThreeGem(row.reward)}`;
 		} else if (i == 2) {
-			// basethree(row.reward);
+
 			t3 += row.task;
 			e3 = `${baseThreeGem(row.reward)}`;
 		}
-		// if (activeTasks.length < 3) {
+
 		activeTasks.push(row.task_id);
-		// } else {
-		// 	activeTasks
-		// }
+
 		i++;
 	}
 
@@ -130,7 +109,6 @@ async function taskPost(client, storedBalance) {
 			duration: 24,
 		},
 	});
-	// })();
 }
 
 module.exports = {
@@ -149,14 +127,9 @@ module.exports = {
 			taskPost(client, storedBalance);
 
 			const job = schedule.scheduleJob('00 * * * *', async () => {
-				// const atext = new TextDisplayBuilder().setContent(
-				// 	`<@&${roleId}>\n um this is a scheduled message i think? whats up wus good :>`,
-				// );
+
 				taskPost(client, storedBalance);
-				// client.channels.cache.get(homeId).send({
-				// 	components: [atext],
-				// 	flags: MessageFlags.IsComponentsV2,
-				// });
+
 			});
 		})();
 
