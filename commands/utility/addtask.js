@@ -9,7 +9,7 @@ module.exports = {
 		.setName('addtask')
 		.setDescription('adds a task to the task list')
 		.addStringOption((option) => option.setName('task').setDescription('task to add').setRequired(true))
-		.addIntegerOption((option) => option.setName('reward').setDescription('gems rewarded on task collection').setRequired(true))
+		.addIntegerOption((option) => option.setName('reward').setDescription('gems rewarded on task collection (pretty please it has to be a power of 3)').setRequired(true))
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 	async execute(interaction) {
 		const task = interaction.options.getString('task');
@@ -20,6 +20,6 @@ module.exports = {
 
 		addTask(task, reward);
 
-		await interaction.reply(`added ${task} (${baseThreeGem(reward)}) to the Task List`);
+		await interaction.reply(`added **${task}** (${baseThreeGem(reward)}) to the Task List`);
 	},
 };
