@@ -139,7 +139,7 @@ async function taskPost(client, storedBalance) {
 		// components: [text],
 		// flags: MessageFlags.IsComponentsV2,
 		poll: {
-			question: { text: `(#${pdata.id ?? 0}) (Message To Be Determined?)` },
+			question: { text: `(#${pdata.id ?? 0}) ${newFunMessage()}` },
 			answers: [
 				{ text: '1: ' + t1, emoji: e1 },
 				{ text: '2: ' + t2, emoji: e2 },
@@ -164,7 +164,7 @@ module.exports = {
 			// checkPostData();
 			// const rule = new schedule.RecurrenceRule();
 			// rule.hour = 8;
-			const msg = await newFunMessage();
+			const msg = newFunMessage();
 			console.log(`logged: ${msg}`);
 
 			taskPost(client, storedBalance);
