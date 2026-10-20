@@ -1,9 +1,9 @@
-const gem1 = '<:gem1:1560818190722793502>';
-const gem3 = '<:gem3:1560818609939415050>';
-const gem9 = '<:gem9:1560818992585777162>';
-const gem27 = '<:gem27:1560819166439804999>';
-const gem81 = '<:gem81:1560819272731590731>';
-const gem243 = '<:gem243:1560819901747175496>';
+const gem1 = '<:GemOne:1440794654168715416>';
+const gem3 = '<:GemTwo:1440794942065606808>';
+const gem9 = '<:GemThree:1440795251827806300>';
+const gem27 = '<:negative1:1441106834323669184>';
+const gem81 = '<:negative2:1441106904506962000>';
+const gem243 = '<:negative3:1441106941844918294>';
 
 function baseThreeGem(input) {
 	let t = input;
