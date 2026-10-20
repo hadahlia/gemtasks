@@ -5,6 +5,40 @@ const { homeId, roleId } = require('../config.json');
 const { baseThreeGem } = require('../inc/gemconversion.js');
 const { activeTasks, gems, addPostData } = require('../inc/taskmanage.js');
 const schedule = require('node-schedule');
+const fs = require('node:fs');
+
+const motdPaths = [ 'verbs.txt', 'pronouns.txt', 'nouns.txt', 'end.txt' ];
+
+function newFunMessage() {
+	// const msg = [];
+	let msg = '';
+	// for (f of motdPaths) {
+	for (let f = 0; f < motdPaths.length; f++) {
+		const data = fs.readFileSync('./motd/' + motdPaths[f], 'utf8');
+		// fs.readFileSync('./motd/' + motdPaths[f], 'utf8', (err, data) => {
+		// 	if (err) {
+		// 		console.error(err);
+		// 		return;
+		// 	}
+
+		const d = data.split('\r\n');
+		const rng = Math.floor(Math.random() * (d.length));
+
+		// 	// const arr = data.split('\n');
+		// 	// .replace('\r', '');
+		msg += d[rng];
+		// msg.push(d[rng]);
+		// 	// console.log(d[rng]);
+		// 	// msg.push(arr[rng]);
+		// 	// console.log(arr.join(' ').replace('\r', ''));
+		// 	// console.log(`${data.split('\n').slice(rng, rng + 1)}`);
+		// 	// return data.split('\n').slice(rng, rng + 1);
+		// });
+	}
+	// console.log(msg.join(' '));
+	// console.log(msg);
+	return msg;
+}
 
 async function checkPostData() {
 	const postData = await PostData.findOne({ where: { active: true } });
@@ -82,6 +116,12 @@ async function taskPost(client, storedBalance) {
 		i++;
 	}
 
+	// MOTD
+	// const motd = newFunMessage();
+
+	// const reader = new FileReader();
+
+
 	// SET POSTDATA
 	const pdata = addPostData(activeTasks[0], activeTasks[1], activeTasks[2]);
 	// const pid = await PostData.max('id') ?? 0;
@@ -124,9 +164,12 @@ module.exports = {
 			// checkPostData();
 			// const rule = new schedule.RecurrenceRule();
 			// rule.hour = 8;
+			const msg = await newFunMessage();
+			console.log(`logged: ${msg}`);
+
 			taskPost(client, storedBalance);
 
-			const job = schedule.scheduleJob('00 * * * *', async () => {
+			const job = schedule.scheduleJob('8 * * *', async () => {
 
 				taskPost(client, storedBalance);
 
@@ -137,6 +180,7 @@ module.exports = {
 		// const role = guild.roles.cache.get(roleId);
 		// const role = message.guild.roles.cache.get(roleId);
 		console.log(`準備完了！ ${client.user.tag}がオンライン`);
+		// newFunMessage();
 
 	},
 };
