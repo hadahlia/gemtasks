@@ -167,7 +167,7 @@ module.exports = {
 			const msg = newFunMessage();
 			console.log(`logged: ${msg}`);
 
-			taskPost(client, storedBalance);
+			// taskPost(client, storedBalance);
 
 			const job = schedule.scheduleJob('8 * * *', async () => {
 
