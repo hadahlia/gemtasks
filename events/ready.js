@@ -123,7 +123,7 @@ async function taskPost(client, storedBalance) {
 
 
 	// SET POSTDATA
-	const pdata = addPostData(activeTasks[0], activeTasks[1], activeTasks[2]);
+	const pdata = await addPostData(activeTasks[0], activeTasks[1], activeTasks[2]);
 	// const pid = await PostData.max('id') ?? 0;
 
 	const atext = new TextDisplayBuilder().setContent(
@@ -167,7 +167,7 @@ module.exports = {
 			const msg = newFunMessage();
 			console.log(`logged: ${msg}`);
 
-			// taskPost(client, storedBalance);
+			taskPost(client, storedBalance);
 
 			const job = schedule.scheduleJob('8 * * *', async () => {
 
