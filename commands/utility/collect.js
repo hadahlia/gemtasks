@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Users, TaskList } = require('../../dbObjects.js');
-const { activeTasks, addBalance, getBalance } = require('../../inc/taskmanage.js');
+const { activeTasks, addBalance } = require('../../inc/taskmanage.js');
 const { baseThreeGem } = require('../../inc/gemconversion.js');
 
 module.exports = {
