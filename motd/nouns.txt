@@ -4,4 +4,23 @@
  Fridge
  Knight
  Queen
- CyberTruck
+ Rifle
+ Accelerator
+ Beer
+ Mattress
+ Couch
+ Chair
+ Table
+ Cake
+ Sweetling
+ Mercenary
+ Fart
+ Demon
+ Gardevoir
+ Fish
+ Moon
+ Sun
+ Darling
+ Car
+ Truck
+ Hatsune Miku
