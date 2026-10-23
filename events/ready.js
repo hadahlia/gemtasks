@@ -58,8 +58,17 @@ async function checkPostData() {
 			activeTasks.push(postData.tid3);
 
 			return true;
-		} else {
+		} else if (h > 24) {
 			postData.active = false;
+			// postData.setDataValue('active', false);
+			postData.save();
+			console.log(`test: ${postData.active}`);
+			// const pdata = await PostData.findOne({ where: { active: true } });
+			// if (pdata) {
+			// 	return checkPostData();
+			// } else {
+			// 	return false;
+			// }
 			return false;
 		}
 
@@ -80,9 +89,10 @@ async function taskPost(client, storedBalance) {
 
 
 	// CHECK POSTDATA
-	for (let g = 0; g < activeTasks.length; g++) {
-		activeTasks.pop();
-	}
+	// for (let g = 0; g < activeTasks.length; g++) {
+	// 	activeTasks.pop();
+	// }
+	activeTasks.length = 0;
 	if (await checkPostData() == true) return;
 
 	for (const row of storedBalance) {
@@ -115,12 +125,6 @@ async function taskPost(client, storedBalance) {
 
 		i++;
 	}
-
-	// MOTD
-	// const motd = newFunMessage();
-
-	// const reader = new FileReader();
-
 
 	// SET POSTDATA
 	const pdata = await addPostData(activeTasks[0], activeTasks[1], activeTasks[2]);
@@ -169,7 +173,7 @@ module.exports = {
 
 			taskPost(client, storedBalance);
 
-			const job = schedule.scheduleJob('8 * * *', async () => {
+			const job = schedule.scheduleJob('25 11 * * *', async () => {
 
 				taskPost(client, storedBalance);
 
